@@ -1,0 +1,133 @@
+$rg-colors: (
+    "yellow": (
+        "base": #fed100,
+        1: #fff9d7,
+        2: #fff4ae,
+        3: #ffee86,
+        4: #ffe335,
+        5: #fed100
+    ),
+    "orange": (
+        "base": #fc9003,
+        1: #ffebcc,
+        2: #ffd699,
+        3: #fec267,
+        4: #ecac2d,
+        5: #fc9003
+    ),
+    "green": (
+        "base": #1aac1e,
+        1: #d1eed2,
+        2: #a3dea5,
+        3: #76cd78,
+        4: #4abc4b,
+        5: #1aac1e,
+        6: #128024,
+        7: #0e5b10
+    ),
+    "red": (
+        "base": #cc0000,
+        "brand": #cc0000,
+        1: #f5cccc,
+        2: #eb9999,
+        3: #e06666,
+        4: #ff2828,
+        5: #cc0000,
+        6: #a30000,
+        7: #7a0000
+    ),
+    "blue": (
+        "base": #3c85df,
+        1: #d8e7f9,
+        2: #b1cef2,
+        3: #8ab6ec,
+        4: #67a9f1,
+        5: #3c85df,
+        6: #336dc2,
+        7: #2a5e9d,
+        8: #183559
+    ),
+    "grey": (
+        "base": #b6b6b6,
+        1: #f2f2f2,
+        2: #ebebeb,
+        3: #dcdcdc,
+        4: #b6b6b6,
+        5: #767676,
+        6: #6e6e6e,
+        7: #373737,
+        8: #333333,
+        9: #222222
+    ),
+    "black": (
+        "base": #000000
+    ),
+    "white": (
+        "base": #ffffff
+    ),
+    "transparent": (
+        "base": transparent
+    )
+);
+
+@function rg-color($color, $tone: "base") {
+    @return map-get(map-get($rg-colors, $color), $tone);
+}
+
+// Your variable overrides
+$blue: rg-color("blue");
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: rg-color("red", 2);
+$red: rg-color("red");
+$orange: rg-color("orange");
+$yellow: rg-color("yellow");
+$green: rg-color("green");;
+$teal: rg-color("green", 3);
+$cyan: rg-color("blue", 4);
+
+$gray-100: rg-color("grey", 1);
+$gray-200: rg-color("grey", 2);
+$gray-300: rg-color("grey", 3);
+$gray-400: rg-color("grey", 4);
+$gray-500: rg-color("grey", 5);
+$gray-600: rg-color("grey", 6);
+$gray-700: rg-color("grey", 7);
+$gray-800: rg-color("grey", 8);
+$gray-900: rg-color("grey", 9);
+
+$primary: rg-color("blue", 6);
+
+$secondary: $gray-600;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-100;
+$dark: $gray-800;
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap");
+$font-family-sans-serif: "Roboto", "Helvetica Neue", Arial, sans-serif; 
+$font-size-root: 14px;
+
+$link-color: rg-color("blue", 6);
+
+// Forms
+$form-label-color: rg-color("grey", 7);
+$form-label-font-weight: 500;
+
+// Validation border should be thicker
+.was-validated .form-control:invalid, .form-control.is-invalid, .form-select:invalid, .form-select.is-invalid{
+    border-width: 2px;
+}
+
+$form-check-input-border: 2px solid rg-color("grey", 6);
+// todo: radios don't match
+// todo: switch off state doesn't match
+
+// make the chevron thicker and square
+$form-select-indicator-color:       $gray-800;
+$form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$form-select-indicator-color}' stroke-width='4' d='M2 5l6 6 6-6'/></svg>");
+
+// Bootstrap and its default variables
+@import "bootstrap";
