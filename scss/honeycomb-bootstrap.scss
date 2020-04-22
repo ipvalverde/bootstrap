@@ -104,12 +104,13 @@ $info: $cyan;
 $warning: $yellow;
 $danger: $red;
 $light: $gray-100;
-$dark: $gray-800;
+$dark: $gray-700;
 
+// typography
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap");
 $font-family-sans-serif: "Roboto", "Helvetica Neue", Arial, sans-serif; 
 $font-size-root: 14px;
-
+$body-color: rg-color("grey", 7);
 $link-color: rg-color("blue", 6);
 
 // Forms
