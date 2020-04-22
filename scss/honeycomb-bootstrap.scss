@@ -141,7 +141,7 @@ $form-label-font-weight: 500;
     border-width: 2px;
 }
 
-$form-check-input-border: 2px solid rg-color("grey", 6);
+$form-check-input-border: 2px solid $gray-600;
 // todo: radios don't match
 // todo: switch off state doesn't match
 
