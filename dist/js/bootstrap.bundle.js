@@ -1283,7 +1283,7 @@
       this._element = element;
       this._indicatorsElement = SelectorEngine.findOne(SELECTOR_INDICATORS, this._element);
       this._touchSupported = 'ontouchstart' in document.documentElement || navigator.maxTouchPoints > 0;
-      this._pointerEvent = Boolean(window.PointerEvent || window.MSPointerEvent);
+      this._pointerEvent = Boolean(window.PointerEvent);
 
       this._addEventListeners();
 
@@ -1646,12 +1646,9 @@
 
         var transitionDuration = getTransitionDurationFromElement(activeElement);
         EventHandler.one(activeElement, TRANSITION_END, function () {
-          nextElement.classList.remove(directionalClassName);
-          nextElement.classList.remove(orderClassName);
+          nextElement.classList.remove(directionalClassName, orderClassName);
           nextElement.classList.add(CLASS_NAME_ACTIVE$1);
-          activeElement.classList.remove(CLASS_NAME_ACTIVE$1);
-          activeElement.classList.remove(orderClassName);
-          activeElement.classList.remove(directionalClassName);
+          activeElement.classList.remove(CLASS_NAME_ACTIVE$1, orderClassName, directionalClassName);
           _this4._isSliding = false;
           setTimeout(function () {
             EventHandler.trigger(_this4._element, EVENT_SLID, {
@@ -1954,9 +1951,7 @@
       var complete = function complete() {
         _this._element.classList.remove(CLASS_NAME_COLLAPSING);
 
-        _this._element.classList.add(CLASS_NAME_COLLAPSE);
-
-        _this._element.classList.add(CLASS_NAME_SHOW);
+        _this._element.classList.add(CLASS_NAME_COLLAPSE, CLASS_NAME_SHOW);
 
         _this._element.style[dimension] = '';
 
@@ -1993,9 +1988,7 @@
 
       this._element.classList.add(CLASS_NAME_COLLAPSING);
 
-      this._element.classList.remove(CLASS_NAME_COLLAPSE);
-
-      this._element.classList.remove(CLASS_NAME_SHOW);
+      this._element.classList.remove(CLASS_NAME_COLLAPSE, CLASS_NAME_SHOW);
 
       var triggerArrayLength = this._triggerArray.length;
 
@@ -2203,7 +2196,7 @@
 
   /**!
    * @fileOverview Kickass library to create and place poppers near their reference elements.
-   * @version 1.16.0
+   * @version 1.16.1
    * @license
    * Copyright (c) 2016 Federico Zivolo and contributors
    *
@@ -2549,7 +2542,7 @@
     var sideA = axis === 'x' ? 'Left' : 'Top';
     var sideB = sideA === 'Left' ? 'Right' : 'Bottom';
 
-    return parseFloat(styles['border' + sideA + 'Width'], 10) + parseFloat(styles['border' + sideB + 'Width'], 10);
+    return parseFloat(styles['border' + sideA + 'Width']) + parseFloat(styles['border' + sideB + 'Width']);
   }
 
   function getSize(axis, body, html, computedStyle) {
@@ -2704,8 +2697,8 @@
     var scrollParent = getScrollParent(children);
 
     var styles = getStyleComputedProperty(parent);
-    var borderTopWidth = parseFloat(styles.borderTopWidth, 10);
-    var borderLeftWidth = parseFloat(styles.borderLeftWidth, 10);
+    var borderTopWidth = parseFloat(styles.borderTopWidth);
+    var borderLeftWidth = parseFloat(styles.borderLeftWidth);
 
     // In cases where the parent is fixed, we must ignore negative scroll in offset calc
     if (fixedPosition && isHTML) {
@@ -2726,8 +2719,8 @@
     // differently when margins are applied to it. The margins are included in
     // the box of the documentElement, in the other cases not.
     if (!isIE10 && isHTML) {
-      var marginTop = parseFloat(styles.marginTop, 10);
-      var marginLeft = parseFloat(styles.marginLeft, 10);
+      var marginTop = parseFloat(styles.marginTop);
+      var marginLeft = parseFloat(styles.marginLeft);
 
       offsets.top -= borderTopWidth - marginTop;
       offsets.bottom -= borderTopWidth - marginTop;
@@ -3666,8 +3659,8 @@
     // Compute the sideValue using the updated popper offsets
     // take popper margin in account because we don't have this info available
     var css = getStyleComputedProperty(data.instance.popper);
-    var popperMarginSide = parseFloat(css['margin' + sideCapitalized], 10);
-    var popperBorderSide = parseFloat(css['border' + sideCapitalized + 'Width'], 10);
+    var popperMarginSide = parseFloat(css['margin' + sideCapitalized]);
+    var popperBorderSide = parseFloat(css['border' + sideCapitalized + 'Width']);
     var sideValue = center - data.offsets.popper[side] - popperMarginSide - popperBorderSide;
 
     // prevent arrowElement from being placed not contiguously to its popper
@@ -5361,7 +5354,6 @@
   var EVENT_MOUSEUP_DISMISS = "mouseup.dismiss" + EVENT_KEY$5;
   var EVENT_MOUSEDOWN_DISMISS = "mousedown.dismiss" + EVENT_KEY$5;
   var EVENT_CLICK_DATA_API$5 = "click" + EVENT_KEY$5 + DATA_API_KEY$5;
-  var CLASS_NAME_SCROLLABLE = 'modal-dialog-scrollable';
   var CLASS_NAME_SCROLLBAR_MEASURER = 'modal-scrollbar-measure';
   var CLASS_NAME_BACKDROP = 'modal-backdrop';
   var CLASS_NAME_OPEN = 'modal-open';
@@ -5548,10 +5540,10 @@
 
       this._element.setAttribute('aria-modal', true);
 
-      if (this._dialog.classList.contains(CLASS_NAME_SCROLLABLE) && modalBody) {
+      this._element.scrollTop = 0;
+
+      if (modalBody) {
         modalBody.scrollTop = 0;
-      } else {
-        this._element.scrollTop = 0;
       }
 
       if (transition) {
@@ -6398,8 +6390,7 @@
     _proto.setContent = function setContent() {
       var tip = this.getTipElement();
       this.setElementContent(SelectorEngine.findOne(SELECTOR_TOOLTIP_INNER, tip), this.getTitle());
-      tip.classList.remove(CLASS_NAME_FADE$1);
-      tip.classList.remove(CLASS_NAME_SHOW$3);
+      tip.classList.remove(CLASS_NAME_FADE$1, CLASS_NAME_SHOW$3);
     };
 
     _proto.setElementContent = function setElementContent(element, content) {
@@ -6419,7 +6410,7 @@
             element.appendChild(content);
           }
         } else {
-          element.innerText = content.textContent;
+          element.textContent = content.textContent;
         }
 
         return;
@@ -6432,7 +6423,7 @@
 
         element.innerHTML = content;
       } else {
-        element.innerText = content;
+        element.textContent = content;
       }
     };
 
@@ -6887,8 +6878,7 @@
       }
 
       this.setElementContent(SelectorEngine.findOne(SELECTOR_CONTENT, tip), content);
-      tip.classList.remove(CLASS_NAME_FADE$2);
-      tip.classList.remove(CLASS_NAME_SHOW$4);
+      tip.classList.remove(CLASS_NAME_FADE$2, CLASS_NAME_SHOW$4);
     };
 
     _proto._addAttachmentClass = function _addAttachmentClass(attachment) {
