@@ -1,77 +1,77 @@
 $rg-colors: (
-    "yellow": (
-        "base": #fed100,
-        1: #fff9d7,
-        2: #fff4ae,
-        3: #ffee86,
-        4: #ffe335,
-        5: #fed100
-    ),
-    "orange": (
-        "base": #fc9003,
-        1: #ffebcc,
-        2: #ffd699,
-        3: #fec267,
-        4: #ecac2d,
-        5: #fc9003
-    ),
-    "green": (
-        "base": #1aac1e,
-        1: #d1eed2,
-        2: #a3dea5,
-        3: #76cd78,
-        4: #4abc4b,
-        5: #1aac1e,
-        6: #128024,
-        7: #0e5b10
-    ),
-    "red": (
-        "base": #cc0000,
-        "brand": #cc0000,
-        1: #f5cccc,
-        2: #eb9999,
-        3: #e06666,
-        4: #ff2828,
-        5: #cc0000,
-        6: #a30000,
-        7: #7a0000
-    ),
-    "blue": (
-        "base": #3c85df,
-        1: #d8e7f9,
-        2: #b1cef2,
-        3: #8ab6ec,
-        4: #67a9f1,
-        5: #3c85df,
-        6: #336dc2,
-        7: #2a5e9d,
-        8: #183559
-    ),
-    "grey": (
-        "base": #b6b6b6,
-        1: #f2f2f2,
-        2: #ebebeb,
-        3: #dcdcdc,
-        4: #b6b6b6,
-        5: #767676,
-        6: #6e6e6e,
-        7: #373737,
-        8: #333333,
-        9: #222222
-    ),
-    "black": (
-        "base": #000000
-    ),
-    "white": (
-        "base": #ffffff
-    ),
-    "transparent": (
-        "base": transparent
-    )
+  "yellow": (
+    "base": #fed100,
+    1: #fff9d7,
+    2: #fff4ae,
+    3: #ffee86,
+    4: #ffe335,
+    5: #fed100,
+  ),
+  "orange": (
+    "base": #fc9003,
+    1: #ffebcc,
+    2: #ffd699,
+    3: #fec267,
+    4: #ecac2d,
+    5: #fc9003,
+  ),
+  "green": (
+    "base": #1aac1e,
+    1: #d1eed2,
+    2: #a3dea5,
+    3: #76cd78,
+    4: #4abc4b,
+    5: #1aac1e,
+    6: #128024,
+    7: #0e5b10,
+  ),
+  "red": (
+    "base": #cc0000,
+    "brand": #cc0000,
+    1: #f5cccc,
+    2: #eb9999,
+    3: #e06666,
+    4: #ff2828,
+    5: #cc0000,
+    6: #a30000,
+    7: #7a0000,
+  ),
+  "blue": (
+    "base": #3c85df,
+    1: #d8e7f9,
+    2: #b1cef2,
+    3: #8ab6ec,
+    4: #67a9f1,
+    5: #3c85df,
+    6: #336dc2,
+    7: #2a5e9d,
+    8: #183559,
+  ),
+  "grey": (
+    "base": #b6b6b6,
+    1: #f2f2f2,
+    2: #ebebeb,
+    3: #dcdcdc,
+    4: #b6b6b6,
+    5: #767676,
+    6: #6e6e6e,
+    7: #373737,
+    8: #333333,
+    9: #222222,
+  ),
+  "black": (
+    "base": #000000,
+  ),
+  "white": (
+    "base": #ffffff,
+  ),
+  "transparent": (
+    "base": transparent,
+  ),
 );
 
 @function rg-color($color, $tone: "base") {
-    @return map-get(map-get($rg-colors, $color), $tone);
+  @return map-get(map-get($rg-colors, $color), $tone);
 }
 
 // Your variable overrides
@@ -82,7 +82,7 @@ $pink: rg-color("red", 2);
 $red: rg-color("red");
 $orange: rg-color("orange");
 $yellow: rg-color("yellow");
-$green: rg-color("green");;
+$green: rg-color("green");
 $teal: rg-color("green", 3);
 $cyan: rg-color("blue", 4);
 
@@ -108,7 +108,7 @@ $dark: $gray-700;
 
 // typography
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap");
-$font-family-sans-serif: "Roboto", "Helvetica Neue", Arial, sans-serif; 
+$font-family-sans-serif: "Roboto", "Helvetica Neue", Arial, sans-serif;
 $font-size-root: 16px;
 $body-color: rg-color("grey", 7);
 $link-color: rg-color("blue", 6);
@@ -122,31 +122,34 @@ $breadcrumb-item-padding-x: 1rem;
 $breadcrumb-active-color: $gray-700;
 $breadcrumb-divider: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' stroke-width='4' fill='#{$red}'/%3E%3C/svg%3E");
 
-.breadcrumb-item a{
-    font-weight: 700;
-    color: $gray-700;
-    text-decoration: none;
-    &:hover{
-        color: $gray-600;
-    }
+.breadcrumb-item a {
+  font-weight: 700;
+  color: $gray-700;
+  text-decoration: none;
+  &:hover {
+    color: $gray-600;
+  }
 }
-
 
 // Forms
 $form-label-color: $gray-700;
 $form-label-font-weight: 500;
 
 // Validation border should be thicker
-.was-validated .form-control:invalid, .form-control.is-invalid, .form-select:invalid, .form-select.is-invalid{
-    border-width: 2px;
+.was-validated .form-control:invalid,
+.form-control.is-invalid,
+.form-select:invalid,
+.form-select.is-invalid {
+  border-width: 2px;
 }
 
+$form-check-border-radius: 0.125em;
 $form-check-input-border: 2px solid $gray-600;
 // todo: radios don't match
 // todo: switch off state doesn't match
 
 // make the chevron thicker and square
-$form-select-indicator-color:       $gray-800;
+$form-select-indicator-color: $gray-800;
 $form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$form-select-indicator-color}' stroke-width='4' d='M2 5l6 6 6-6'/></svg>");
 
 // Navbar
@@ -155,7 +158,7 @@ $navbar-dark-color: $gray-600;
 $navbar-dark-hover-color: rg-color("white");
 
 .nav-item.active {
- font-weight: 700;
+  font-weight: 700;
 }
 
 // Messaging
@@ -164,10 +167,10 @@ $alert-border-level: 0;
 
 $alert-padding-y: 1.25rem;
 
-.alert{
-    border-width: 0 0 0 .625rem !important;
-    background-color: rg-color("grey", 1) !important;
-    color: $body-color !important;
+.alert {
+  border-width: 0 0 0 0.625rem !important;
+  background-color: rg-color("grey", 1) !important;
+  color: $body-color !important;
 }
 
 // Bootstrap and its default variables
