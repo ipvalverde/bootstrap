@@ -173,5 +173,22 @@ $alert-padding-y: 1.25rem;
   color: $body-color !important;
 }
 
+// Tooltip
+$tooltip-bg: rg-color("grey", 9);
+$tooltip-opacity: 1;
+$tooltip-border-radius: 0.5em;
+$tooltip-padding-y: 0.625rem;
+$tooltip-padding-x: 0.625rem;
+$tooltip-margin: 0.375rem;
+
+.bs-tooltip-top, .bs-tooltip-bottom{
+  .tooltip-arrow {
+    left: 0 !important;
+    &::before {
+      margin-left: 10px;
+    }
+  }
+}
+
 // Bootstrap and its default variables
 @import "bootstrap";
