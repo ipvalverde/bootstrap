@@ -47,6 +47,18 @@
   margin-left: 10px;
 }
 
+.card {
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.card.bg-dark {
+  box-shadow: 2px 2px 0 #000;
+}
+
+.card.bg-light {
+  background-color: #ffffff !important;
+}
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
@@ -4398,10 +4410,10 @@ fieldset:disabled .btn {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: #f2f2f2;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
+  border: 0 solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.125em;
 }
 
 .card > hr {
@@ -4416,19 +4428,19 @@ fieldset:disabled .btn {
 
 .card > .list-group:first-child {
   border-top-width: 0;
-  border-top-left-radius: calc(0.25rem - 1px);
-  border-top-right-radius: calc(0.25rem - 1px);
+  border-top-left-radius: 0.125em;
+  border-top-right-radius: 0.125em;
 }
 
 .card > .list-group:last-child {
   border-bottom-width: 0;
-  border-bottom-right-radius: calc(0.25rem - 1px);
-  border-bottom-left-radius: calc(0.25rem - 1px);
+  border-bottom-right-radius: 0.125em;
+  border-bottom-left-radius: 0.125em;
 }
 
 .card-body {
   flex: 1 1 auto;
-  padding: 1.25rem 1.25rem;
+  padding: 0.625rem 0.625rem;
 }
 
 .card-title {
@@ -4449,18 +4461,18 @@ fieldset:disabled .btn {
 }
 
 .card-link + .card-link {
-  margin-left: 1.25rem;
+  margin-left: 0.625rem;
 }
 
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-bottom: 0 solid rgba(0, 0, 0, 0.125);
 }
 
 .card-header:first-child {
-  border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+  border-radius: 0.125em 0.125em 0 0;
 }
 
 .card-header + .list-group .list-group-item:first-child {
@@ -4470,11 +4482,11 @@ fieldset:disabled .btn {
 .card-footer {
   padding: 0.75rem 1.25rem;
   background-color: rgba(0, 0, 0, 0.03);
-  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  border-top: 0 solid rgba(0, 0, 0, 0.125);
 }
 
 .card-footer:last-child {
-  border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px);
+  border-radius: 0 0 0.125em 0.125em;
 }
 
 .card-header-tabs {
@@ -4482,6 +4494,11 @@ fieldset:disabled .btn {
   margin-bottom: -0.75rem;
   margin-left: -0.625rem;
   border-bottom: 0;
+}
+
+.card-header-tabs .nav-link.active {
+  background-color: #f2f2f2;
+  border-bottom-color: #f2f2f2;
 }
 
 .card-header-pills {
@@ -4506,14 +4523,14 @@ fieldset:disabled .btn {
 
 .card-img,
 .card-img-top {
-  border-top-left-radius: calc(0.25rem - 1px);
-  border-top-right-radius: calc(0.25rem - 1px);
+  border-top-left-radius: 0.125em;
+  border-top-right-radius: 0.125em;
 }
 
 .card-img,
 .card-img-bottom {
-  border-bottom-right-radius: calc(0.25rem - 1px);
-  border-bottom-left-radius: calc(0.25rem - 1px);
+  border-bottom-right-radius: 0.125em;
+  border-bottom-left-radius: 0.125em;
 }
 
 .card-group > .card {
@@ -4576,7 +4593,7 @@ fieldset:disabled .btn {
 
 .accordion > .card > .card-header {
   border-radius: 0;
-  margin-bottom: -1px;
+  margin-bottom: 0;
 }
 
 .breadcrumb {

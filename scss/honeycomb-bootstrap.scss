@@ -209,5 +209,22 @@ $tooltip-margin: 0.375rem;
   }
 }
 
+// Cards
+$card-border-radius: 0.125em;
+$card-border-width: 0;
+$card-spacer-y: 0.625rem;
+$card-spacer-x: 0.625rem;
+$card-bg: rg-color("grey", 1);
+.card{
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+    &.bg-dark{
+      box-shadow: 2px 2px 0 #000;
+    }
+    &.bg-light{
+      background-color: rg-color("white") !important;
+    }
+}
+
+
 // Bootstrap and its default variables
 @import "bootstrap";
