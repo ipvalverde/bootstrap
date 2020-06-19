@@ -146,11 +146,16 @@ $form-label-font-weight: 500;
 // Check
 $form-check-input-border-radius: 0.125em;
 $form-check-input-border: 2px solid $gray-600;
+.form-check-input:hover {
+  cursor: pointer;
+}
 
 // Radio
-$form-check-radio-checked-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2.5' fill='#{$primary}'/></svg>") !default;
-.form-check-input[type="radio"]:checked {
-  background-color: rg-color("white");
+ $form-check-radio-checked-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2.5' fill='#{$primary}'/></svg>") !default;
+.form-check-input[type="radio"] {
+  &:checked {
+    background-color: rg-color("white");
+  }
 }
 
 // Switch
