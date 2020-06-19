@@ -409,7 +409,6 @@
   var $ = getjQuery();
   var namespaceRegex = /[^.]*(?=\..*)\.|.*/;
   var stripNameRegex = /\..*/;
-  var keyEventRegex = /^key/;
   var stripUidRegex = /::\d+$/;
   var eventRegistry = {}; // Events storage
 
@@ -436,19 +435,8 @@
     return eventRegistry[uid];
   }
 
-  function fixEvent(event, element) {
-    // Add which for key events
-    if (event.which === null && keyEventRegex.test(event.type)) {
-      event.which = event.charCode === null ? event.keyCode : event.charCode;
-    }
-
-    event.delegateTarget = element;
-  }
-
   function bootstrapHandler(element, fn) {
     return function handler(event) {
-      fixEvent(event, element);
-
       if (handler.oneOff) {
         EventHandler.off(element, event.type, fn);
       }
@@ -464,8 +452,6 @@
       for (var target = event.target; target && target !== this; target = target.parentNode) {
         for (var i = domElements.length; i--;) {
           if (domElements[i] === target) {
-            fixEvent(event, target);
-
             if (handler.oneOff) {
               EventHandler.off(element, event.type, fn);
             }
@@ -1203,10 +1189,8 @@
   var DATA_KEY$2 = 'bs.carousel';
   var EVENT_KEY$2 = "." + DATA_KEY$2;
   var DATA_API_KEY$2 = '.data-api';
-  var ARROW_LEFT_KEYCODE = 37; // KeyboardEvent.which value for left arrow key
-
-  var ARROW_RIGHT_KEYCODE = 39; // KeyboardEvent.which value for right arrow key
-
+  var ARROW_LEFT_KEY = 'ArrowLeft';
+  var ARROW_RIGHT_KEY = 'ArrowRight';
   var TOUCHEVENT_COMPAT_WAIT = 500; // Time for mouse compat events to fire after touch
 
   var SWIPE_THRESHOLD = 40;
@@ -1515,13 +1499,13 @@
         return;
       }
 
-      switch (event.which) {
-        case ARROW_LEFT_KEYCODE:
+      switch (event.key) {
+        case ARROW_LEFT_KEY:
           event.preventDefault();
           this.prev();
           break;
 
-        case ARROW_RIGHT_KEYCODE:
+        case ARROW_RIGHT_KEY:
           event.preventDefault();
           this.next();
           break;
@@ -2097,7 +2081,7 @@
 
       var _config = _objectSpread2({}, Default$1, {}, Manipulator.getDataAttributes(element), {}, typeof config === 'object' && config ? config : {});
 
-      if (!data && _config.toggle && /show|hide/.test(config)) {
+      if (!data && _config.toggle && typeof config === 'string' && /show|hide/.test(config)) {
         _config.toggle = false;
       }
 
@@ -2196,7 +2180,7 @@
 
   /**!
    * @fileOverview Kickass library to create and place poppers near their reference elements.
-   * @version 1.16.1
+   * @version 1.16.0
    * @license
    * Copyright (c) 2016 Federico Zivolo and contributors
    *
@@ -2542,7 +2526,7 @@
     var sideA = axis === 'x' ? 'Left' : 'Top';
     var sideB = sideA === 'Left' ? 'Right' : 'Bottom';
 
-    return parseFloat(styles['border' + sideA + 'Width']) + parseFloat(styles['border' + sideB + 'Width']);
+    return parseFloat(styles['border' + sideA + 'Width'], 10) + parseFloat(styles['border' + sideB + 'Width'], 10);
   }
 
   function getSize(axis, body, html, computedStyle) {
@@ -2697,8 +2681,8 @@
     var scrollParent = getScrollParent(children);
 
     var styles = getStyleComputedProperty(parent);
-    var borderTopWidth = parseFloat(styles.borderTopWidth);
-    var borderLeftWidth = parseFloat(styles.borderLeftWidth);
+    var borderTopWidth = parseFloat(styles.borderTopWidth, 10);
+    var borderLeftWidth = parseFloat(styles.borderLeftWidth, 10);
 
     // In cases where the parent is fixed, we must ignore negative scroll in offset calc
     if (fixedPosition && isHTML) {
@@ -2719,8 +2703,8 @@
     // differently when margins are applied to it. The margins are included in
     // the box of the documentElement, in the other cases not.
     if (!isIE10 && isHTML) {
-      var marginTop = parseFloat(styles.marginTop);
-      var marginLeft = parseFloat(styles.marginLeft);
+      var marginTop = parseFloat(styles.marginTop, 10);
+      var marginLeft = parseFloat(styles.marginLeft, 10);
 
       offsets.top -= borderTopWidth - marginTop;
       offsets.bottom -= borderTopWidth - marginTop;
@@ -3659,8 +3643,8 @@
     // Compute the sideValue using the updated popper offsets
     // take popper margin in account because we don't have this info available
     var css = getStyleComputedProperty(data.instance.popper);
-    var popperMarginSide = parseFloat(css['margin' + sideCapitalized]);
-    var popperBorderSide = parseFloat(css['border' + sideCapitalized + 'Width']);
+    var popperMarginSide = parseFloat(css['margin' + sideCapitalized], 10);
+    var popperBorderSide = parseFloat(css['border' + sideCapitalized + 'Width'], 10);
     var sideValue = center - data.offsets.popper[side] - popperMarginSide - popperBorderSide;
 
     // prevent arrowElement from being placed not contiguously to its popper
@@ -4819,19 +4803,14 @@
   var DATA_KEY$4 = 'bs.dropdown';
   var EVENT_KEY$4 = "." + DATA_KEY$4;
   var DATA_API_KEY$4 = '.data-api';
-  var ESCAPE_KEYCODE = 27; // KeyboardEvent.which value for Escape (Esc) key
+  var ESCAPE_KEY = 'Escape';
+  var SPACE_KEY = 'Space';
+  var TAB_KEY = 'Tab';
+  var ARROW_UP_KEY = 'ArrowUp';
+  var ARROW_DOWN_KEY = 'ArrowDown';
+  var RIGHT_MOUSE_BUTTON = 2; // MouseEvent.button value for the secondary button, usually the right button
 
-  var SPACE_KEYCODE = 32; // KeyboardEvent.which value for space key
-
-  var TAB_KEYCODE = 9; // KeyboardEvent.which value for tab key
-
-  var ARROW_UP_KEYCODE = 38; // KeyboardEvent.which value for up arrow key
-
-  var ARROW_DOWN_KEYCODE = 40; // KeyboardEvent.which value for down arrow key
-
-  var RIGHT_MOUSE_BUTTON_WHICH = 3; // MouseEvent.which value for the right button (assuming a right-handed mouse)
-
-  var REGEXP_KEYDOWN = new RegExp(ARROW_UP_KEYCODE + "|" + ARROW_DOWN_KEYCODE + "|" + ESCAPE_KEYCODE);
+  var REGEXP_KEYDOWN = new RegExp(ARROW_UP_KEY + "|" + ARROW_DOWN_KEY + "|" + ESCAPE_KEY);
   var EVENT_HIDE$1 = "hide" + EVENT_KEY$4;
   var EVENT_HIDDEN$1 = "hidden" + EVENT_KEY$4;
   var EVENT_SHOW$1 = "show" + EVENT_KEY$4;
@@ -5136,7 +5115,7 @@
     };
 
     Dropdown.clearMenus = function clearMenus(event) {
-      if (event && (event.which === RIGHT_MOUSE_BUTTON_WHICH || event.type === 'keyup' && event.which !== TAB_KEYCODE)) {
+      if (event && (event.button === RIGHT_MOUSE_BUTTON || event.type === 'keyup' && event.key !== TAB_KEY)) {
         return;
       }
 
@@ -5163,7 +5142,7 @@
           continue;
         }
 
-        if (event && (event.type === 'click' && /input|textarea/i.test(event.target.tagName) || event.type === 'keyup' && event.which === TAB_KEYCODE) && dropdownMenu.contains(event.target)) {
+        if (event && (event.type === 'click' && /input|textarea/i.test(event.target.tagName) || event.type === 'keyup' && event.key === TAB_KEY) && dropdownMenu.contains(event.target)) {
           continue;
         }
 
@@ -5207,7 +5186,7 @@
       //  - If key is other than escape
       //    - If key is not up or down => not a dropdown command
       //    - If trigger inside the menu => not a dropdown command
-      if (/input|textarea/i.test(event.target.tagName) ? event.which === SPACE_KEYCODE || event.which !== ESCAPE_KEYCODE && (event.which !== ARROW_DOWN_KEYCODE && event.which !== ARROW_UP_KEYCODE || SelectorEngine.closest(event.target, SELECTOR_MENU)) : !REGEXP_KEYDOWN.test(event.which)) {
+      if (/input|textarea/i.test(event.target.tagName) ? event.key === SPACE_KEY || event.key !== ESCAPE_KEY && (event.key !== ARROW_DOWN_KEY && event.key !== ARROW_UP_KEY || SelectorEngine.closest(event.target, SELECTOR_MENU)) : !REGEXP_KEYDOWN.test(event.key)) {
         return;
       }
 
@@ -5221,14 +5200,14 @@
       var parent = Dropdown.getParentFromElement(this);
       var isActive = this.classList.contains(CLASS_NAME_SHOW$1);
 
-      if (event.which === ESCAPE_KEYCODE) {
+      if (event.key === ESCAPE_KEY) {
         var button = this.matches(SELECTOR_DATA_TOGGLE$2) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE$2)[0];
         button.focus();
         Dropdown.clearMenus();
         return;
       }
 
-      if (!isActive || event.which === SPACE_KEYCODE) {
+      if (!isActive || event.key === SPACE_KEY) {
         Dropdown.clearMenus();
         return;
       }
@@ -5239,18 +5218,20 @@
         return;
       }
 
-      var index = items.indexOf(event.target) || 0;
+      var index = items.indexOf(event.target);
 
-      if (event.which === ARROW_UP_KEYCODE && index > 0) {
+      if (event.key === ARROW_UP_KEY && index > 0) {
         // Up
         index--;
       }
 
-      if (event.which === ARROW_DOWN_KEYCODE && index < items.length - 1) {
+      if (event.key === ARROW_DOWN_KEY && index < items.length - 1) {
         // Down
         index++;
-      }
+      } // index is -1 if the first keydown is an ArrowUp
 
+
+      index = index === -1 ? 0 : index;
       items[index].focus();
     };
 
@@ -5328,8 +5309,7 @@
   var DATA_KEY$5 = 'bs.modal';
   var EVENT_KEY$5 = "." + DATA_KEY$5;
   var DATA_API_KEY$5 = '.data-api';
-  var ESCAPE_KEYCODE$1 = 27; // KeyboardEvent.which value for Escape (Esc) key
-
+  var ESCAPE_KEY$1 = 'Escape';
   var Default$3 = {
     backdrop: true,
     keyboard: true,
@@ -5593,11 +5573,11 @@
 
       if (this._isShown) {
         EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS, function (event) {
-          if (_this5._config.keyboard && event.which === ESCAPE_KEYCODE$1) {
+          if (_this5._config.keyboard && event.key === ESCAPE_KEY$1) {
             event.preventDefault();
 
             _this5.hide();
-          } else if (!_this5._config.keyboard && event.which === ESCAPE_KEYCODE$1) {
+          } else if (!_this5._config.keyboard && event.key === ESCAPE_KEY$1) {
             _this5._triggerBackdropTransition();
           }
         });
@@ -6185,11 +6165,11 @@
 
       if (event) {
         var dataKey = this.constructor.DATA_KEY;
-        var context = Data.getData(event.delegateTarget, dataKey);
+        var context = Data.getData(event.target, dataKey);
 
         if (!context) {
-          context = new this.constructor(event.delegateTarget, this._getDelegateConfig());
-          Data.setData(event.delegateTarget, dataKey, context);
+          context = new this.constructor(event.target, this._getDelegateConfig());
+          Data.setData(event.target, dataKey, context);
         }
 
         context._activeTrigger.click = !context._activeTrigger.click;
@@ -6554,11 +6534,11 @@
 
     _proto._enter = function _enter(event, context) {
       var dataKey = this.constructor.DATA_KEY;
-      context = context || Data.getData(event.delegateTarget, dataKey);
+      context = context || Data.getData(event.target, dataKey);
 
       if (!context) {
-        context = new this.constructor(event.delegateTarget, this._getDelegateConfig());
-        Data.setData(event.delegateTarget, dataKey, context);
+        context = new this.constructor(event.target, this._getDelegateConfig());
+        Data.setData(event.target, dataKey, context);
       }
 
       if (event) {
@@ -6587,11 +6567,11 @@
 
     _proto._leave = function _leave(event, context) {
       var dataKey = this.constructor.DATA_KEY;
-      context = context || Data.getData(event.delegateTarget, dataKey);
+      context = context || Data.getData(event.target, dataKey);
 
       if (!context) {
-        context = new this.constructor(event.delegateTarget, this._getDelegateConfig());
-        Data.setData(event.delegateTarget, dataKey, context);
+        context = new this.constructor(event.target, this._getDelegateConfig());
+        Data.setData(event.target, dataKey, context);
       }
 
       if (event) {
