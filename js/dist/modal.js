@@ -213,8 +213,7 @@
   var DATA_KEY = 'bs.modal';
   var EVENT_KEY = "." + DATA_KEY;
   var DATA_API_KEY = '.data-api';
-  var ESCAPE_KEYCODE = 27; // KeyboardEvent.which value for Escape (Esc) key
-
+  var ESCAPE_KEY = 'Escape';
   var Default = {
     backdrop: true,
     keyboard: true,
@@ -478,11 +477,11 @@
 
       if (this._isShown) {
         EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS, function (event) {
-          if (_this5._config.keyboard && event.which === ESCAPE_KEYCODE) {
+          if (_this5._config.keyboard && event.key === ESCAPE_KEY) {
             event.preventDefault();
 
             _this5.hide();
-          } else if (!_this5._config.keyboard && event.which === ESCAPE_KEYCODE) {
+          } else if (!_this5._config.keyboard && event.key === ESCAPE_KEY) {
             _this5._triggerBackdropTransition();
           }
         });

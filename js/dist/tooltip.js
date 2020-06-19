@@ -467,11 +467,11 @@
 
       if (event) {
         var dataKey = this.constructor.DATA_KEY;
-        var context = Data.getData(event.delegateTarget, dataKey);
+        var context = Data.getData(event.target, dataKey);
 
         if (!context) {
-          context = new this.constructor(event.delegateTarget, this._getDelegateConfig());
-          Data.setData(event.delegateTarget, dataKey, context);
+          context = new this.constructor(event.target, this._getDelegateConfig());
+          Data.setData(event.target, dataKey, context);
         }
 
         context._activeTrigger.click = !context._activeTrigger.click;
@@ -836,11 +836,11 @@
 
     _proto._enter = function _enter(event, context) {
       var dataKey = this.constructor.DATA_KEY;
-      context = context || Data.getData(event.delegateTarget, dataKey);
+      context = context || Data.getData(event.target, dataKey);
 
       if (!context) {
-        context = new this.constructor(event.delegateTarget, this._getDelegateConfig());
-        Data.setData(event.delegateTarget, dataKey, context);
+        context = new this.constructor(event.target, this._getDelegateConfig());
+        Data.setData(event.target, dataKey, context);
       }
 
       if (event) {
@@ -869,11 +869,11 @@
 
     _proto._leave = function _leave(event, context) {
       var dataKey = this.constructor.DATA_KEY;
-      context = context || Data.getData(event.delegateTarget, dataKey);
+      context = context || Data.getData(event.target, dataKey);
 
       if (!context) {
-        context = new this.constructor(event.delegateTarget, this._getDelegateConfig());
-        Data.setData(event.delegateTarget, dataKey, context);
+        context = new this.constructor(event.target, this._getDelegateConfig());
+        Data.setData(event.target, dataKey, context);
       }
 
       if (event) {
